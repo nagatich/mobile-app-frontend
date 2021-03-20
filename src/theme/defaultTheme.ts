@@ -43,6 +43,7 @@ export default {
     extra: defaultThemeVariables.color.beigePale,
     active: defaultThemeVariables.color.blackLighter,
     landing: defaultThemeVariables.color.beigePaleLight,
+    green: defaultThemeVariables.color.green,
   },
   borderRadius: defaultThemeVariables.borderRadius,
   fontFamily: {
@@ -77,6 +78,7 @@ export default {
   margins: {
     base: defaultThemeVariables.margins.base,
     big: defaultThemeVariables.margins.big,
+    small: defaultThemeVariables.margins.small,
   },
   form: {
     labelColor: {

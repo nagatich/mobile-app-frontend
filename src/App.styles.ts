@@ -92,4 +92,14 @@ export default createGlobalStyle`
       outline: none;
     }
   }
+
+  input:focus {
+    outline: none;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
 `

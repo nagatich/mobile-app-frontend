@@ -8,7 +8,7 @@ export const defaultThemeVariables = {
     white: '#fff',
     grey: '#9F9C99',
     greyDark: '#7f7b77',
-    greyLight: '#DDDBD9',
+    greyLight: '#EEE',
     greyLightSecondary: '#C4C4C4',
     greyLighter: '#BFBDBC',
     beigePale: '#F9F7F3',
@@ -35,6 +35,7 @@ export const defaultThemeVariables = {
     small: '12px',
   },
   margins: {
+    small: '10px',
     base: '20px',
     big: '40px',
   },

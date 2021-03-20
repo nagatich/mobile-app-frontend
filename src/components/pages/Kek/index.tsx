@@ -1,15 +1,15 @@
 import * as React from 'react'
 
-import MainLayout from 'components/layout/MainLayout'
+// import MainLayout from 'components/layout/MainLayout'
 
 import Styled from './styles'
 
 const Kek: React.FC = () => (
-  <MainLayout>
+  <div>
     <Styled>
       kek
     </Styled>
-  </MainLayout>
+  </div>
 )
 
 export default Kek
