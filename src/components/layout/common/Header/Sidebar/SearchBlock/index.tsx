@@ -9,17 +9,11 @@ const SearchBlock: React.FC = () => {
   const [value, setValue] = React.useState('')
 
   const sendData = async () => {
-    const data = await request('GET', `get_cars_models/${value}/`)
-    console.log({ data })
-  }
-
-  React.useEffect(() => {
-    console.log('mount')
-
-    return () => {
-      console.log('unmount')
+    if (value) {
+      const data = await request('GET', `get_cars_models/${value}/`)
+      console.log({ data })
     }
-  }, [])
+  }
 
   return (
     <Styled className="search">

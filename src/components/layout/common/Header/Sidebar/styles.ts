@@ -13,9 +13,9 @@ export default styled.div<Partial<Props>>`
   transition: all ease-in-out .75s;
   box-shadow: 0 12px 22px rgba(26, 26, 26, 0.16);
   ${(props) => (props.isShown ? css`
-    transform: translateX(100%)
-  ` : css`
     transform: translateX(0)
+  ` : css`
+    transform: translateX(100%)
   `)};
 
   ${down('tablet')} {

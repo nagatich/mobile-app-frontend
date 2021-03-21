@@ -93,7 +93,7 @@ export default createGlobalStyle`
     }
   }
 
-  input:focus {
+  *:focus {
     outline: none;
   }
 
