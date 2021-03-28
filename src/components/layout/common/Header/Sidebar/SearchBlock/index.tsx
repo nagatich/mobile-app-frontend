@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { IconButton, Input } from '@material-ui/core'
 import { Search } from '@material-ui/icons'
 
 import { request } from 'api/request'
@@ -18,18 +19,17 @@ const SearchBlock: React.FC = () => {
   return (
     <Styled className="search">
       <div className="search__input">
-        <input
+        <Input
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
       </div>
-      <button
-        type="button"
+      <IconButton
         className="search__button"
         onClick={sendData}
       >
         <Search />
-      </button>
+      </IconButton>
     </Styled>
   )
 }

@@ -19,6 +19,11 @@ const Sidebar: React.FC<Props> = ({ isShown, toggleIsShown }) => {
     setActiveRouteName(location.pathname)
   }), [history])
 
+  const onItemClick = (path: string) => {
+    setActiveRouteName(path)
+    toggleIsShown()
+  }
+
   return (
     <Styled
       isShown={isShown}
@@ -38,7 +43,7 @@ const Sidebar: React.FC<Props> = ({ isShown, toggleIsShown }) => {
               route={item}
               activeName={activeRouteName}
               key={item.name}
-              onClick={() => setActiveRouteName(item.path)}
+              onClick={() => onItemClick(item.path)}
             />
           ))}
         </ul>

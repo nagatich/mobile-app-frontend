@@ -4,7 +4,7 @@ import { down } from 'styled-breakpoints'
 import Props from './types'
 
 export default styled.div<Partial<Props>>`
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   width: 40%;
@@ -12,10 +12,11 @@ export default styled.div<Partial<Props>>`
   background: ${({ theme }) => theme.bgColor.secondaryLight};
   transition: all ease-in-out .75s;
   box-shadow: 0 12px 22px rgba(26, 26, 26, 0.16);
+  z-index: ${({ theme }) => theme.zIndex.highest};
   ${(props) => (props.isShown ? css`
-    transform: translateX(0)
+    transform: translateX(0);
   ` : css`
-    transform: translateX(100%)
+    transform: translateX(100%);
   `)};
 
   ${down('tablet')} {

@@ -2,9 +2,8 @@ import * as React from 'react'
 import { Link } from 'react-router-dom'
 
 import { routes } from 'routes'
-// import MainLayout from 'components/layout/MainLayout'
 
-const WishList: React.FC = () => (
+const WishListPage: React.FC = () => (
   <div>
     wish list
     {routes.map((route) => (
@@ -18,4 +17,4 @@ const WishList: React.FC = () => (
   </div>
 )
 
-export default WishList
+export default WishListPage

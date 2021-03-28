@@ -1,7 +1,7 @@
 import { Home, FormatListNumbered } from '@material-ui/icons'
 
-import Kek from 'components/pages/Kek'
-import WishList from 'components/pages/WishList'
+import HomePage from 'components/pages/HomePage'
+import WishListPage from 'components/pages/WishListPage'
 
 export interface Route {
   name: string
@@ -14,13 +14,13 @@ export const routes: Route[] = [
   {
     name: 'Главная страница',
     path: '/',
-    component: Kek,
+    component: HomePage,
     icon: Home,
   },
   {
-    name: 'Список жеданий',
+    name: 'Список желаний',
     path: '/wish_list',
-    component: WishList,
+    component: WishListPage,
     icon: FormatListNumbered,
   },
 ]

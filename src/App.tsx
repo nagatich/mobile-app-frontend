@@ -1,37 +1,35 @@
 import * as React from 'react'
-import { Router, Route, Switch } from 'react-router-dom'
-import { createBrowserHistory } from 'history'
+import { Switch, BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
+import { Provider } from 'mobx-react'
 
 import themes from 'theme'
 import MainLayout from 'components/layout/MainLayout'
+import stores from 'stores'
+import { getRoutes } from 'lib/routes'
 
-import GlobalStyles from './App.styles'
 import { routes } from './routes'
+import GlobalStyles from './App.styles'
 
-const history = createBrowserHistory()
+const App: React.FC = () => {
+  React.useEffect(() => {
+    console.log('App')
+  }, [])
 
-const getRoutes = (r: typeof routes) => r.map((route) => (
-  <Route
-    key={route.name}
-    path={route.path}
-    component={route.component}
-    exact
-  />
-))
-
-const App: React.FC = () => (
-  <ThemeProvider theme={themes.defaultTheme}>
-    <GlobalStyles />
-    <Router history={history}>
-      {/* TODO поменять расположение лэйаута */}
-      <MainLayout>
-        <Switch>
-          {getRoutes(routes)}
-        </Switch>
-      </MainLayout>
-    </Router>
-  </ThemeProvider>
-)
+  return (
+    <Provider {...stores}>
+      <ThemeProvider theme={themes.defaultTheme}>
+        <GlobalStyles />
+        <BrowserRouter>
+          <MainLayout>
+            <Switch>
+              {getRoutes(routes)}
+            </Switch>
+          </MainLayout>
+        </BrowserRouter>
+      </ThemeProvider>
+    </Provider>
+  )
+}
 
 export default App
