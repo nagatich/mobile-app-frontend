@@ -1,19 +1,28 @@
 import { observable, action, makeObservable } from 'mobx'
 
 import {
-  Car,
+  getBrands,
+  getModels,
+  getGenerations,
+  getModifications,
+} from 'api/cars/'
+import {
+  Brand,
   Model,
   Generation,
   Modification,
-  getCarsList,
-  getCarsModels,
-  getModelGenerations,
-  getGenerationModifications,
-} from 'api/cars/'
+} from 'api/cars/types'
+import {
+  profileCars,
+} from 'api/profile'
+import {
+  PreviousCarSearched,
+  DataProfileCar,
+} from 'api/profile/types'
 
 import AppStore from '../AppStore'
 
-const defaultCar: Car = {
+const defaultCar: Brand = {
   name: '',
 }
 
@@ -35,10 +44,10 @@ const defaultModification: Modification = {
 class FilterStore {
   @observable isLoading = false
 
-  @observable carList: Car[] = []
-  @observable selectedCar: Car = defaultCar
+  @observable brands: Brand[] = []
+  @observable selectedBrand: Brand = defaultCar
 
-  @observable carsModelList: Model[] = []
+  @observable models: Model[] = []
   @observable selectedModel: Model = defaultCar
 
   @observable modelGenerationList: Generation[] = []
@@ -46,6 +55,8 @@ class FilterStore {
 
   @observable generationModificationList: Modification[] = []
   @observable selectedGenerationModification: Modification = defaultModification
+
+  @observable previousCarSearched?: PreviousCarSearched
 
   constructor(public appStore: typeof AppStore) {
     makeObservable(this)
@@ -56,21 +67,32 @@ class FilterStore {
   }
 
   // single set
-  @action selectCar = (name: string) => {
-    const car = this.carList.find((item) => item.name === name)
+  @action selectBrand = (name: string) => {
+    const car = this.brands.find((item) => item.name === name)
     if (car) {
-      this.selectedCar = car
+      this.selectedBrand = car
     } else {
-      this.selectedCar = defaultCar
+      this.selectedBrand = defaultCar
+    }
+    if (this.selectedBrand.name) {
+      this.getPreviousCarSearched({
+        brand: this.selectedBrand.name,
+      })
     }
   }
 
   @action selectModel = (name: string) => {
-    const model = this.carsModelList.find((item) => item.name === name)
+    const model = this.models.find((item) => item.name === name)
     if (model) {
       this.selectedModel = model
     } else {
       this.selectedModel = defaultCar
+    }
+    if (this.selectedModel.name) {
+      this.getPreviousCarSearched({
+        brand: this.selectedBrand.name,
+        model: this.selectedModel.name,
+      })
     }
   }
 
@@ -81,6 +103,13 @@ class FilterStore {
     } else {
       this.selectedGeneration = defaultGeneration
     }
+    if (this.selectedGeneration.name) {
+      this.getPreviousCarSearched({
+        brand: this.selectedBrand.name,
+        model: this.selectedModel.name,
+        generation: this.selectedGeneration.number,
+      })
+    }
   }
 
   @action selectModification = (name: string) => {
@@ -90,22 +119,25 @@ class FilterStore {
     } else {
       this.selectedGenerationModification = defaultModification
     }
+    if (this.selectedGenerationModification.name) {
+      this.previousCarSearched = undefined
+    }
   }
 
   @action resetSelectedItems = ({ car = false, model = false, generation = false, modification = false }) => {
-    if (car) this.selectCar(defaultCar.name)
+    if (car) this.selectBrand(defaultCar.name)
     if (model) this.selectModel(defaultCar.name)
     if (generation) this.selectGeneration(defaultGeneration.name)
     if (modification) this.selectModification(defaultModification.name)
   }
 
   // list set
-  @action setCarList = (cars: Car[]) => {
-    this.carList = cars
+  @action setBrandList = (brands: Brand[]) => {
+    this.brands = brands
   }
 
   @action setModelList = (models: Model[]) => {
-    this.carsModelList = models
+    this.models = models
   }
 
   @action setGenerationList = (generations: Generation[]) => {
@@ -117,91 +149,161 @@ class FilterStore {
   }
 
   @action resetLists = ({ car = false, model = false, generation = false, modification = false }) => {
-    if (car) this.setCarList([])
+    if (car) this.setBrandList([])
     if (model) this.setModelList([])
     if (generation) this.setGenerationList([])
     if (modification) this.setModificationList([])
   }
 
   // fetchs
-  @action getCarsList = () => {
-    this.setIsLoading(true)
+  getBrands = async () => {
+    this.resetSelectedItems({
+      car: true,
+      model: true,
+      generation: true,
+      modification: true,
+    })
+    this.resetLists({
+      car: true,
+      model: true,
+      generation: true,
+      modification: true,
+    })
 
-    this.resetSelectedItems({ car: true, model: true, generation: true, modification: true })
-    this.resetLists({ car: true, model: true, generation: true, modification: true })
-
-    getCarsList()
+    await getBrands()
       .then((res) => {
-        this.carList = res.items
+        this.setBrandList(res)
       })
       .catch((err) => {
         // eslint-disable-next-line no-console
         console.log(err)
       })
-      .finally(() => {
-        this.setIsLoading(false)
-      })
   }
 
-  @action getCarsModels = () => {
+  getBrandsWithLoading = async () => {
     this.setIsLoading(true)
+    await this.getBrands()
+    this.setIsLoading(false)
+  }
 
-    this.resetSelectedItems({ model: true, generation: true, modification: true })
-    this.resetLists({ model: true, generation: true, modification: true })
-
-    getCarsModels(this.selectedCar.name)
+  getModels = async (brandName: string) => {
+    this.resetSelectedItems({
+      model: true,
+      generation: true,
+      modification: true,
+    })
+    this.resetLists({
+      model: true,
+      generation: true,
+      modification: true,
+    })
+    await getModels(brandName)
       .then((res) => {
-        this.carsModelList = res.items
+        this.setModelList(res)
       })
       .catch((err) => {
         // eslint-disable-next-line no-console
         console.log(err)
       })
-      .finally(() => {
-        this.setIsLoading(false)
-      })
   }
 
-  @action getModelGenerations = () => {
+  getModelsWithLoading = async (brandName: string) => {
     this.setIsLoading(true)
+    await this.getModels(brandName)
+    this.setIsLoading(false)
+  }
 
-    this.resetSelectedItems({ generation: true, modification: true })
-    this.resetLists({ generation: true, modification: true })
+  getGenerations = async (brandName: string, modelName: string) => {
+    this.resetSelectedItems({
+      generation: true,
+      modification: true,
+    })
+    this.resetLists({
+      generation: true,
+      modification: true,
+    })
 
-    getModelGenerations(this.selectedCar.name, this.selectedModel.name)
+    await getGenerations(brandName, modelName)
       .then((res) => {
-        this.modelGenerationList = res.items
+        this.setGenerationList(res)
       })
       .catch((err) => {
         // eslint-disable-next-line no-console
         console.log(err)
       })
-      .finally(() => {
-        this.setIsLoading(false)
-      })
   }
 
-  @action getGenerationModifications = () => {
+  getGenerationsWithLoading = async (brandName: string, modelName: string) => {
     this.setIsLoading(true)
+    await this.getGenerations(brandName, modelName)
+    this.setIsLoading(false)
+  }
 
+  getModifications = async (brandName:string, modelName:string, generationName:string) => {
     this.resetSelectedItems({ modification: true })
     this.resetLists({ modification: true })
 
-    getGenerationModifications(this.selectedCar.name, this.selectedModel.name, this.selectedGeneration.name)
+    await getModifications(brandName, modelName, generationName)
       .then((res) => {
-        this.generationModificationList = res.items
+        this.setModificationList(res)
       })
       .catch((err) => {
         // eslint-disable-next-line no-console
         console.log(err)
       })
-      .finally(() => {
-        this.setIsLoading(false)
+  }
+
+  getModificationsWithLoading = async (brandName: string, modelName: string, generationName:string) => {
+    this.setIsLoading(true)
+    await this.getModifications(brandName, modelName, generationName)
+    this.setIsLoading(false)
+  }
+
+  @action getPreviousCarSearched = (data: Partial<DataProfileCar>) => {
+    profileCars(data)
+      .then((res) => {
+        const [previousCarSearched] = res
+        this.previousCarSearched = previousCarSearched
       })
   }
 
+  @action fillSelectsByPreviousCar = async (car: PreviousCarSearched) => {
+    const {
+      brand,
+      model,
+      generation,
+      modification,
+    } = car
+    this.setIsLoading(true)
+
+    this.selectBrand(brand.name)
+    await this.getModels(brand.name)
+    if (!model) {
+      this.setIsLoading(false)
+      return
+    }
+
+    this.selectModel(model.name)
+    await this.getGenerations(brand.name, model.name)
+    if (!generation) {
+      this.setIsLoading(false)
+      return
+    }
+
+    this.selectGeneration(generation.name)
+    await this.getModifications(brand.name, model.name, generation.name)
+    if (!modification) {
+      this.setIsLoading(false)
+      return
+    }
+
+    this.selectModification(modification.name)
+    this.setIsLoading(false)
+  }
+
+  // getters
   get getCarModelName() {
-    return `${this.selectedCar.name} ${this.selectedModel.name}`
+    return `${this.selectedBrand.name} ${this.selectedModel.name}`
   }
 }
 

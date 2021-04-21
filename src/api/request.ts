@@ -19,6 +19,7 @@ interface Options {
 
 const removeAccessToken = () => {
   localStorage.removeItem('token')
+  document.cookie = 'token='
 }
 
 export const request = async (method: Method, uri: string, options: Options = {}) => {
@@ -26,9 +27,10 @@ export const request = async (method: Method, uri: string, options: Options = {}
   const headers: { [key: string]: string } = {
     'Content-Type': 'application/json',
   }
-  const accessToken = JSON.parse(localStorage.getItem('token') as string)
+  const accessToken = localStorage.getItem('token')
   if (accessToken) {
     headers.Authorization = `Token ${accessToken}`
+    document.cookie = `token=${accessToken}`
   }
 
   const req = await fetch(url, {

@@ -10,6 +10,8 @@ const Logo: React.FC = () => (
       className="logo__img"
       src={Sider}
       alt="sider"
+      width="50px"
+      height="50px"
     />
   </Styled>
 )

@@ -3,6 +3,7 @@ import queryString from 'query-string'
 import { request } from '../request'
 
 interface Data {
+  brand: string
   model: string
   generation: number
   query: string
@@ -12,6 +13,7 @@ interface Data {
 }
 
 const transformData = (data: Data) => ({
+  brand: data.brand,
   model: data.model,
   generation: data.generation,
   query: data.query,

@@ -4,7 +4,7 @@ interface Props {
   isActive: boolean
 }
 
-export default styled.div<Props>`
+export default styled.li<Props>`
   margin-bottom: ${({ theme }) => theme.margins.base};
   border-radius: ${({ theme }) => theme.borderRadius.smaller};
   ${(props) => props.isActive && css`

@@ -32,18 +32,20 @@ class QueryStore {
 
   // fetchs
   @action query = () => {
+    const { filterStore } = this.appStore
     const data = {
-      model: this.appStore.filterStore.getCarModelName,
-      generation: this.appStore.filterStore.selectedGeneration.number,
-      engineFuel: this.appStore.filterStore.selectedGenerationModification.fuel,
-      engineVolume: this.appStore.filterStore.selectedGenerationModification.volume,
+      brand: filterStore.selectedBrand.name,
+      model: filterStore.selectedModel.name,
+      generation: filterStore.selectedGeneration.number,
+      engineFuel: filterStore.selectedGenerationModification.fuel,
+      engineVolume: filterStore.selectedGenerationModification.volume,
       query: this.q,
     }
     this.setIsLoading(true)
     this.previousQuery = this.q
     query(data)
       .then((res) => {
-        this.result = res
+        this.setResult(res)
       })
       .catch((err) => {
         console.log({ err })
@@ -51,6 +53,15 @@ class QueryStore {
       .finally(() => {
         this.setIsLoading(false)
       })
+  }
+
+  @action setResult = (result: any) => {
+    this.result = result
+  }
+
+  @action resetResult = () => {
+    this.previousQuery = ''
+    this.setResult(null)
   }
 }
 

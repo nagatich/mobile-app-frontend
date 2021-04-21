@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import LayoutWrapper from '../LayoutWrapper'
 import Header from '../common/Header'
-import Footer from '../common/Footer'
+// import Footer from '../common/Footer'
 import Content from '../Content'
 
 const MainLayout: React.FC = ({ children }) => (
@@ -11,7 +11,7 @@ const MainLayout: React.FC = ({ children }) => (
     <Content>
       { children }
     </Content>
-    <Footer />
+    {/* <Footer /> */}
   </LayoutWrapper>
 )
 

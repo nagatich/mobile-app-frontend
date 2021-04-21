@@ -18,15 +18,18 @@ const SearchBlock: React.FC = () => {
 
   return (
     <Styled className="search">
-      <div className="search__input">
-        <Input
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-      </div>
+      <Input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        className="search__input"
+        inputProps={{
+          'aria-label': 'Search Input',
+        }}
+      />
       <IconButton
         className="search__button"
         onClick={sendData}
+        aria-label="Search Button"
       >
         <Search />
       </IconButton>

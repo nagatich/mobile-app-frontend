@@ -11,25 +11,19 @@ import { getRoutes } from 'lib/routes'
 import { routes } from './routes'
 import GlobalStyles from './App.styles'
 
-const App: React.FC = () => {
-  React.useEffect(() => {
-    console.log('App')
-  }, [])
-
-  return (
-    <Provider {...stores}>
-      <ThemeProvider theme={themes.defaultTheme}>
-        <GlobalStyles />
-        <BrowserRouter>
+const App: React.FC = () => (
+  <Provider {...stores}>
+    <ThemeProvider theme={themes.defaultTheme}>
+      <GlobalStyles />
+      <BrowserRouter>
+        <Switch>
           <MainLayout>
-            <Switch>
-              {getRoutes(routes)}
-            </Switch>
+            {getRoutes(routes)}
           </MainLayout>
-        </BrowserRouter>
-      </ThemeProvider>
-    </Provider>
-  )
-}
+        </Switch>
+      </BrowserRouter>
+    </ThemeProvider>
+  </Provider>
+)
 
 export default App

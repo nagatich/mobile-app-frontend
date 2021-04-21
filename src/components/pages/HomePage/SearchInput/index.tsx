@@ -26,9 +26,13 @@ const SearchInput: React.FC = () => {
       <Input
         value={q}
         onChange={onChange}
+        inputProps={{
+          'aria-label': 'Query Search Input',
+        }}
       />
       <IconButton
         onClick={onClick}
+        aria-label="Query Search Button"
       >
         <Search />
       </IconButton>

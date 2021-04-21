@@ -3,7 +3,9 @@ export const transformFuel = (name: string) => {
     case 'gasoline': return 'бензин'
     case 'diesel': return 'дизель'
     case 'natural_gas_or_gasoline': return 'газ/бензин'
-    default: return ''
+    case 'natural_gas': return 'газ'
+    case 'electricity': return 'электро'
+    default: return 'unknown'
   }
 }
 

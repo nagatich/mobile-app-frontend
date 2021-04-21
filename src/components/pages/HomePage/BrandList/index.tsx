@@ -1,22 +1,24 @@
 import * as React from 'react'
 
-import { Car } from 'api/cars/'
-import { useFilterStore } from 'lib/hooks/stores'
+import { Brand } from 'api/cars/types'
+import { useFilterStore, useQueryStore } from 'lib/hooks/stores'
 import Select from 'components/common/Select'
 
 import Styled from './styles'
 
 interface Props {
-  list: Car[]
+  list: Brand[]
 }
 
-const CarList: React.FC<Props> = ({ list }) => {
-  const { filterStore, selectedCar } = useFilterStore()
+const BrandList: React.FC<Props> = ({ list }) => {
+  const { filterStore, selectedBrand } = useFilterStore()
+  const { queryStore } = useQueryStore()
 
   const onChange = (e: React.ChangeEvent<{ value: unknown }>) => {
     const name = e.target.value as string
-    filterStore.selectCar(name)
-    filterStore.getCarsModels()
+    filterStore.selectBrand(name)
+    filterStore.getModelsWithLoading(name)
+    queryStore.resetResult()
   }
 
   const options = list.map((car) => ({
@@ -28,7 +30,7 @@ const CarList: React.FC<Props> = ({ list }) => {
     <Styled>
       <Select
         onChange={onChange}
-        value={selectedCar.name}
+        value={selectedBrand.name}
         options={options}
         label="Бренд"
       />
@@ -36,4 +38,4 @@ const CarList: React.FC<Props> = ({ list }) => {
   )
 }
 
-export default CarList
+export default BrandList
