@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { Route } from 'react-router-dom'
 
-import { routes } from 'routes'
+import { Route as Routes } from 'routes'
 
-export const getRoutes = (r: typeof routes) => r.map((route) => (
+export const getRoutes = (r: Routes[]) => r.map((route) => (
   <Route
     key={route.name}
     path={route.path}

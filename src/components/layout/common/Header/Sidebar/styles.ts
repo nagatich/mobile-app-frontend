@@ -45,7 +45,16 @@ export default styled.div<Partial<Props>>`
       }
 
       &__list {
-        
+        &-exit {
+          padding: ${({ theme }) => theme.padding.container.min};
+          width: 100%;
+          display: flex;
+          align-items: center;
+
+          svg {
+            margin-right: ${({ theme }) => theme.margins.small};
+          }
+        }
       }
     }
   }

@@ -2,10 +2,12 @@ import { observable, action, makeObservable } from 'mobx'
 
 import FilterStore from '../FilterStore'
 import QueryStore from '../QueryStore'
+import AuthStore from '../AuthStore'
 
 class AppStore {
   filterStore: FilterStore
   queryStore: QueryStore
+  authStore: AuthStore
 
   @observable isLoading = true
 
@@ -13,6 +15,7 @@ class AppStore {
     makeObservable(this)
     this.filterStore = new FilterStore(this)
     this.queryStore = new QueryStore(this)
+    this.authStore = new AuthStore(this)
 
     setTimeout(() => {
       this.setIsLoading(false)
