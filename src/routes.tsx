@@ -4,6 +4,8 @@ import { Redirect, Switch } from 'react-router-dom'
 
 import { getRoutes } from 'lib/routes'
 import { useAuthStore } from 'lib/hooks/stores'
+import MainLayout from 'components/layout/MainLayout'
+import AuthLayout from 'components/layout/AuthLayout'
 import HomePage from 'components/pages/HomePage'
 import WishListPage from 'components/pages/WishListPage'
 import LoginPage from 'components/pages/LoginPage'
@@ -44,15 +46,19 @@ const AppRoutes: React.FC = () => {
 
   return (
     user ? (
-      <Switch>
-        { getRoutes(routes) }
-        <Redirect to="/" />
-      </Switch>
+      <MainLayout>
+        <Switch>
+          { getRoutes(routes) }
+          <Redirect to="/" />
+        </Switch>
+      </MainLayout>
     ) : (
-      <Switch>
-        { getRoutes(authRoutes) }
-        <Redirect to="/login" />
-      </Switch>
+      <AuthLayout>
+        <Switch>
+          { getRoutes(authRoutes) }
+          <Redirect to="/login" />
+        </Switch>
+      </AuthLayout>
     )
   )
 }

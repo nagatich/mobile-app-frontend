@@ -2,6 +2,8 @@ import queryString from 'query-string'
 
 import { request } from '../request'
 
+import { Result } from './types'
+
 interface Data {
   brand: string
   model: string
@@ -22,7 +24,7 @@ const transformData = (data: Data) => ({
   city: data.city,
 })
 
-export const query = async (data: Data) => {
+export const query = async (data: Data): Promise<Result> => {
   const res = request('GET', `query?${queryString.stringify(transformData(data))}`)
   return res
 }

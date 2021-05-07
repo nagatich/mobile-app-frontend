@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components'
 import { Provider } from 'mobx-react'
 
 import themes from 'theme'
-import MainLayout from 'components/layout/MainLayout'
+// import MainLayout from 'components/layout/MainLayout'
 import stores from 'stores'
 
 import AppRoutes from './routes'
@@ -15,9 +15,7 @@ const App: React.FC = () => (
     <ThemeProvider theme={themes.defaultTheme}>
       <GlobalStyles />
       <BrowserRouter>
-        <MainLayout>
-          <AppRoutes />
-        </MainLayout>
+        <AppRoutes />
       </BrowserRouter>
     </ThemeProvider>
   </Provider>

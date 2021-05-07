@@ -11,7 +11,7 @@ const transformUser = (user: any): User => ({
   username: user.username,
 })
 
-export const login = async (user: any) => {
+export const login = async (user: any): Promise<User> => {
   const data = await request('POST', 'auth/login/', {
     body: user,
   })

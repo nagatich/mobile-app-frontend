@@ -6,6 +6,7 @@ import { request } from '../request'
 
 import {
   DataProfileCar,
+  PreviousCarSearched,
 } from './types'
 
 const transformProps = (data: Partial<DataProfileCar>) => ({
@@ -25,7 +26,7 @@ const transformData = (data: any) => ({
   modification: data.modification ? transformModification(data.modification) : null,
 })
 
-export const profileCars = async (data: Partial<DataProfileCar>) => {
+export const profileCars = async (data: Partial<DataProfileCar>): Promise<PreviousCarSearched[]> => {
   const res = await request('GET', `profile/cars/?${queryString.stringify(transformProps(data))}`)
   return res.map((item: any) => transformData(item))
 }

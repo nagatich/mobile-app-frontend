@@ -1,10 +1,9 @@
 import { observable, action, makeObservable } from 'mobx'
 
 import { query } from 'api/query'
+import { Result } from 'api/query/types'
 
 import AppStore from '../AppStore'
-
-import { Result } from './types'
 
 class QueryStore {
   @observable isLoading = false
