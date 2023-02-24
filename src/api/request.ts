@@ -9,7 +9,7 @@ type Method =
   | 'DELETE'
 
 interface Body {
-  [key: string]: string | number | string[] | number[] | Body
+  [key: string]: string | number | string[] | number[] | Body | any
 }
 
 interface Options {

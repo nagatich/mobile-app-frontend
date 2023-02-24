@@ -48,12 +48,14 @@ const Sidebar: React.FC<Props> = ({ isShown, toggleIsShown }) => {
         <SearchBlock />
         <ul className="sidebar-content__list">
           {routings.map((item) => (
-            <Item
-              route={item}
-              activeName={activeRouteName}
-              key={item.name}
-              onClick={() => onItemClick(item.path)}
-            />
+            item.isShown && (
+              <Item
+                route={item}
+                activeName={activeRouteName}
+                key={item.name}
+                onClick={() => onItemClick(item.path)}
+              />
+            )
           ))}
           {user && (
             <button

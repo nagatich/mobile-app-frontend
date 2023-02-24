@@ -32,7 +32,7 @@ const PreviousSearch: React.FC = () => {
           ${previousCarSearched.brand.name}
           ${previousCarSearched.model?.name || ''}
           ${previousCarSearched.generation?.family || ''}
-          ${previousCarSearched.modification?.name || ''}
+          ${previousCarSearched.modification?.fuel || ''}
         `}
       </button>
     </Styled>

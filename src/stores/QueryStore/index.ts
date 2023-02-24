@@ -36,8 +36,8 @@ class QueryStore {
       brand: filterStore.selectedBrand.name,
       model: filterStore.selectedModel.name,
       generation: filterStore.selectedGeneration.number,
-      engineFuel: filterStore.selectedGenerationModification.fuel,
-      engineVolume: filterStore.selectedGenerationModification.volume,
+      engineFuel: filterStore.selectedModification.fuel,
+      engineVolume: filterStore.selectedModification.volume,
       query: this.q,
     }
     this.setIsLoading(true)

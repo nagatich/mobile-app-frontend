@@ -14,7 +14,7 @@ interface Data {
   city?: number
 }
 
-const transformData = (data: Data) => ({
+const transformProps = (data: Data) => ({
   brand: data.brand,
   model: data.model,
   generation: data.generation,
@@ -25,6 +25,6 @@ const transformData = (data: Data) => ({
 })
 
 export const query = async (data: Data): Promise<Result> => {
-  const res = request('GET', `query?${queryString.stringify(transformData(data))}`)
+  const res = request('GET', `query?${queryString.stringify(transformProps(data))}`)
   return res
 }

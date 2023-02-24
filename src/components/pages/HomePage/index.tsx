@@ -18,8 +18,8 @@ const HomePage: React.FC = () => {
     isLoading: appStoreIsLoading,
     brands,
     models,
-    modelGenerationList,
-    generationModificationList,
+    generations,
+    modifications,
   } = useFilterStore()
 
   const { isLoading: queryStoreIsLoading } = useQueryStore()
@@ -45,8 +45,8 @@ const HomePage: React.FC = () => {
     <Styled>
       <BrandList list={brands} />
       <ModelList list={models} />
-      <GenerationList list={modelGenerationList} />
-      <ModificationList list={generationModificationList} />
+      <GenerationList list={generations} />
+      <ModificationList list={modifications} />
       <PreviousSearch />
       <SearchInput />
       <Result />

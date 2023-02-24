@@ -1,6 +1,6 @@
 import queryString from 'query-string'
 
-import { transformGeneration, transformModification } from 'api/cars'
+import { transformGeneration, transformModification } from 'api/cars/transform'
 
 import { request } from '../request'
 
@@ -22,8 +22,8 @@ const transformData = (data: any) => ({
   created: data.created,
   lastSearched: data.last_searched,
   model: data.model,
-  generation: data.generation ? transformGeneration(data.generation) : null,
-  modification: data.modification ? transformModification(data.modification) : null,
+  generation: data.generation ? transformGeneration(data.generation) : undefined,
+  modification: data.modification ? transformModification(data.modification) : undefined,
 })
 
 export const profileCars = async (data: Partial<DataProfileCar>): Promise<PreviousCarSearched[]> => {

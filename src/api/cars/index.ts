@@ -6,21 +6,7 @@ import {
   Generation,
   Modification,
 } from './types'
-
-export const transformGeneration = (data: any): Generation => ({
-  family: JSON.parse(data.family),
-  productionPeriod: JSON.parse(data.production_period),
-  name: data.name,
-  number: data.number,
-})
-
-export const transformModification = (data: any): Modification => ({
-  fuel: data.fuel,
-  generation: data.generation,
-  name: data.name,
-  powerRange: JSON.parse(data.power_range),
-  volume: data.volume,
-})
+import { transformGeneration, transformModification } from './transform'
 
 export const getBrands = async (): Promise<Brand[]> => {
   const data = await request('GET', 'get_brand_list/')

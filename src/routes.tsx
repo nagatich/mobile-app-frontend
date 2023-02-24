@@ -9,10 +9,12 @@ import AuthLayout from 'components/layout/AuthLayout'
 import HomePage from 'components/pages/HomePage'
 import WishListPage from 'components/pages/WishListPage'
 import LoginPage from 'components/pages/LoginPage'
+import WishListItemPage from 'components/pages/WishListItemPage'
 
 export interface Route {
   name: string
   path: string
+  isShown: boolean
   component: React.FC
   icon: React.FC
 }
@@ -23,12 +25,21 @@ export const routes: Route[] = [
     path: '/',
     component: HomePage,
     icon: Home,
+    isShown: true,
   },
   {
     name: 'Список желаний',
     path: '/wish_list',
     component: WishListPage,
     icon: FormatListNumbered,
+    isShown: true,
+  },
+  {
+    name: 'WishListItemPage',
+    path: '/wish_list/:id',
+    component: WishListItemPage,
+    icon: FormatListNumbered,
+    isShown: false,
   },
 ]
 
@@ -38,6 +49,7 @@ export const authRoutes: Route[] = [
     path: '/login',
     component: LoginPage,
     icon: Person,
+    isShown: true,
   },
 ]
 

@@ -1,12 +1,15 @@
 export interface Brand {
+  id: number
   name: string
 }
 
 export interface Model {
+  id: number
   name: string
 }
 
 export interface Generation {
+  id: number
   family: string[]
   productionPeriod: string[]
   name: string
@@ -14,9 +17,10 @@ export interface Generation {
 }
 
 export interface Modification {
+  id: number
   fuel: string
-  generation: number
   name: string
   powerRange: number[]
   volume: number
+  generation?: Generation
 }

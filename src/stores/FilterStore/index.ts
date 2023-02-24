@@ -23,10 +23,12 @@ import {
 import AppStore from '../AppStore'
 
 const defaultCar: Brand = {
+  id: 0,
   name: '',
 }
 
 const defaultGeneration: Generation = {
+  id: 0,
   family: [],
   productionPeriod: [],
   name: '',
@@ -34,8 +36,9 @@ const defaultGeneration: Generation = {
 }
 
 const defaultModification: Modification = {
+  id: 0,
   fuel: '',
-  generation: 0,
+  generation: defaultGeneration,
   name: '',
   powerRange: [],
   volume: 0,
@@ -50,11 +53,11 @@ class FilterStore {
   @observable models: Model[] = []
   @observable selectedModel: Model = defaultCar
 
-  @observable modelGenerationList: Generation[] = []
+  @observable generations: Generation[] = []
   @observable selectedGeneration: Generation = defaultGeneration
 
-  @observable generationModificationList: Modification[] = []
-  @observable selectedGenerationModification: Modification = defaultModification
+  @observable modifications: Modification[] = []
+  @observable selectedModification: Modification = defaultModification
 
   @observable previousCarSearched?: PreviousCarSearched
 
@@ -97,7 +100,7 @@ class FilterStore {
   }
 
   @action selectGeneration = (name: string) => {
-    const generation = this.modelGenerationList.find((item) => item.name === name)
+    const generation = this.generations.find((item) => item.name === name)
     if (generation) {
       this.selectedGeneration = generation
     } else {
@@ -113,13 +116,13 @@ class FilterStore {
   }
 
   @action selectModification = (name: string) => {
-    const modification = this.generationModificationList.find((item) => item.name === name)
+    const modification = this.modifications.find((item) => item.name === name)
     if (modification) {
-      this.selectedGenerationModification = modification
+      this.selectedModification = modification
     } else {
-      this.selectedGenerationModification = defaultModification
+      this.selectedModification = defaultModification
     }
-    if (this.selectedGenerationModification.name) {
+    if (this.selectedModification.name) {
       this.previousCarSearched = undefined
     }
   }
@@ -141,11 +144,11 @@ class FilterStore {
   }
 
   @action setGenerationList = (generations: Generation[]) => {
-    this.modelGenerationList = generations
+    this.generations = generations
   }
 
   @action setModificationList = (modifications: Modification[]) => {
-    this.generationModificationList = modifications
+    this.modifications = modifications
   }
 
   @action resetLists = ({ car = false, model = false, generation = false, modification = false }) => {
@@ -302,9 +305,10 @@ class FilterStore {
   }
 
   // getters
-  get getCarModelName() {
-    return `${this.selectedBrand.name} ${this.selectedModel.name}`
-  }
+  getBrandById = (id: number) => this.brands.find((brand) => brand.id === id)
+  getModelById = (id: number) => this.models.find((model) => model.id === id)
+  getGenerationById = (id: number) => this.generations.find((generation) => generation.id === id)
+  getModificationById = (id: number) => this.modifications.find((modifications) => modifications.id === id)
 }
 
 export default FilterStore
